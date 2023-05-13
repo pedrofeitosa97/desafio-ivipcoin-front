@@ -2,6 +2,8 @@ import { useState } from "react";
 import { TextField, Button, Typography } from "@mui/material";
 import { Form, StyledTypography, StyledTextField, StyledBackground } from "./styled";
 import { useNavigate } from "react-router-dom";
+import { useRequests } from "../../hooks/request.hooks";
+import { ToastContainer, toast } from 'react-toastify';
 
 interface LoginFormValues {
   email: string;
@@ -10,6 +12,8 @@ interface LoginFormValues {
 
 const LoginForm: React.FC = () => {
   const navigate = useNavigate();
+  const { loginUserRequest } = useRequests()
+
   const [formValues, setFormValues] = useState<LoginFormValues>({
     email: "",
     password: "",
@@ -25,7 +29,22 @@ const LoginForm: React.FC = () => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log("Submitted values:", formValues);
+    handleLogin(formValues)
   };
+
+  const handleLogin = async (data: any) =>{
+    try {
+      await loginUserRequest(data)
+      navigate('/home')
+      toast.success('Login feito com sucesso.',{
+        position: 'bottom-right'
+      })
+    } catch (error) {
+      toast.error('Email ou senha inválido.',{
+        position: 'bottom-right'
+      })
+    }
+  }
 
   return (
     <>
@@ -56,6 +75,7 @@ const LoginForm: React.FC = () => {
           Não possui conta? Registre-se
         </span>
       </Form>
+      <ToastContainer />
     </>
   );
 };

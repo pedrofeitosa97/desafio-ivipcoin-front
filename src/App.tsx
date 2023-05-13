@@ -1,12 +1,11 @@
 import LoginForm from "./components/login_form";
 import { ThemeProvider } from '@mui/material/styles';
 import { StyledBackground } from "./components/login_form/styled";
-import RegisterForm from "./components/register_interface";
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import RegisterForm from "./components/register_form";
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { theme } from "./theme/theme";
 
 function App() {
-  
   return (
     <BrowserRouter>
         <StyledBackground/>
