@@ -52,6 +52,8 @@ input:-webkit-autofill {
 export const StyledTypography = styled(Typography)`
 color: #8553BF;
 padding-bottom: 16px;
+cursor: pointer;
+
 `
 
 export const StyledButton = styled(Button)`

@@ -1,38 +1,22 @@
-import LoginForm from "./components/login_interface";
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { StyledBackground } from "./components/login_interface/styled";
+import LoginForm from "./components/login_form";
+import { ThemeProvider } from '@mui/material/styles';
+import { StyledBackground } from "./components/login_form/styled";
 import RegisterForm from "./components/register_interface";
-
-const theme = createTheme({
-  components: {
-    MuiInputBase: {
-      defaultProps: {
-        inputProps: {
-          style: { color: '#fff' }
-        }
-      }
-    },
-    MuiInputLabel: {
-      defaultProps: {
-        style: { color: '#fff' }
-      }
-    }
-  },
-  palette: {
-    primary: {
-      main: '#7B53A8',
-    },
-  },
-});
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { theme } from "./theme/theme";
 
 function App() {
   
   return (
-    <ThemeProvider theme={theme}>
-      <StyledBackground/>
-      {/* <LoginForm/> */}
-      <RegisterForm/>
-    </ThemeProvider>
+    <BrowserRouter>
+        <StyledBackground/>
+        <ThemeProvider theme={theme}>
+          <Routes>
+          <Route path='' element={<LoginForm />} />
+          <Route path='/register' element={<RegisterForm/>} />
+          </Routes>
+        </ThemeProvider>
+    </BrowserRouter>
   );
 }
 

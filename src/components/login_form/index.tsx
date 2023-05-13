@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { TextField, Button, Typography } from "@mui/material";
 import { Form, StyledTypography, StyledTextField, StyledBackground } from "./styled";
+import { useNavigate } from "react-router-dom";
 
 interface LoginFormValues {
   email: string;
@@ -8,6 +9,7 @@ interface LoginFormValues {
 }
 
 const LoginForm: React.FC = () => {
+  const navigate = useNavigate();
   const [formValues, setFormValues] = useState<LoginFormValues>({
     email: "",
     password: "",
@@ -50,7 +52,7 @@ const LoginForm: React.FC = () => {
         <Button color="primary" variant="contained" type="submit">
           Login
         </Button>
-        <span className="register-link">
+        <span className="register-link" onClick={() => navigate('/register')}>
           Não possui conta? Registre-se
         </span>
       </Form>

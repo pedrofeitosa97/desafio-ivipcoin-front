@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { TextField, Button, Typography } from "@mui/material";
-import { Form, StyledTypography, StyledTextField, StyledButton } from "../login_interface/styled";
+import { Form, StyledTypography, StyledTextField, StyledButton } from "../login_form/styled";
+import { Navigate, useNavigate } from "react-router-dom";
 
 interface RegisterFormValues {
     name: string;
@@ -10,7 +11,7 @@ interface RegisterFormValues {
 }
 
 export default function RegisterForm() {
-
+    const navigate = useNavigate();
     const [formValues, setFormValues] = useState<RegisterFormValues>({
         name: "",
         email: "",
@@ -73,6 +74,7 @@ export default function RegisterForm() {
       <StyledButton color="primary" variant="contained" type="submit">
         Registrar-se
       </StyledButton>
+      <StyledTypography variant="h6" onClick={() => navigate('/')}>Voltar</StyledTypography>
     </Form>
   </>
   )
