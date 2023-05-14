@@ -11,6 +11,8 @@ export const StyledBackground = styled.div`
   height: 100vh;
   width: 100vw;
   overflow: hidden;
+  z-index: -1;
+  position: fixed;
 `
 
 export const Form = styled.form`

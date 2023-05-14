@@ -4,6 +4,7 @@ import { Form, StyledTypography, StyledTextField, StyledBackground } from "./sty
 import { useNavigate } from "react-router-dom";
 import { useRequests } from "../../hooks/request.hooks";
 import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface LoginFormValues {
   email: string;
@@ -36,12 +37,12 @@ const LoginForm: React.FC = () => {
     try {
       await loginUserRequest(data)
       navigate('/home')
-      toast.success('Login feito com sucesso.',{
-        position: 'bottom-right'
+      toast.success('Login realizado com sucesso.',{
+        position: 'top-center'
       })
     } catch (error) {
-      toast.error('Email ou senha inválido.',{
-        position: 'bottom-right'
+      toast.error('Email ou senha inválidos.',{
+        position: 'top-center'
       })
     }
   }
@@ -75,7 +76,6 @@ const LoginForm: React.FC = () => {
           Não possui conta? Registre-se
         </span>
       </Form>
-      <ToastContainer />
     </>
   );
 };
