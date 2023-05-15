@@ -1,9 +1,9 @@
 import axios from 'axios'
 
 const api = axios.create({
-    baseURL: 'http://localhost:3000/',
+    baseURL: 'https://tricky-gray-jersey.cyclic.app/',
     headers: {
-        'Access-Control-Allow-Origin': 'http://localhost:3001',
+        'Access-Control-Allow-Origin': 'https://tricky-gray-jersey.cyclic.app:3000',
         'Content-Type': 'application/json'
       }
 })
