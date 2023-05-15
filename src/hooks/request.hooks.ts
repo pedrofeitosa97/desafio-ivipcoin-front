@@ -10,7 +10,6 @@ export const useRequests = () => {
     const navigate = useNavigate()
     const registerUserRequest = async (payload: iRegisterFormValues) => {
         try {
-            await registerSchema.validate(payload, { abortEarly: false });
             const response = await api.post('/users', payload)
             navigate('/')
             toast.success('Usuário registrado com sucesso!', {
@@ -19,19 +18,13 @@ export const useRequests = () => {
             })
             return response
         } catch (error: any) {
-            console.log(error)
-            error.inner.forEach((e: any) => {
-                toast.error(`${e.message}`, {
-                    position: 'top-center',
-                    autoClose: 1200,
-                    theme: "dark",
-                })
+            toast.error(`${error.response.data.message}`, {
+                position: 'top-center'
             })
         } 
     }      
     const loginUserRequest = async (payload: iUserLogin) => {
         try {
-            await loginSchema.validate(payload, { abortEarly: false });
             const response = await api.post('/login', payload)
             const user: iUserToken = {
                 uid: response.data.uid,

@@ -52,7 +52,6 @@ useEffect(() => {
 const getFullTaskList = async () => {
     if(!alignment !== false || alignment !== 'getList') {
     const taskListData = await getFullTaskListRequest()
-    console.log(taskListData)
     const tasksWithDates = taskListData.map((task: any) => ({
         ...task,
         createdAt: new Date(task.created_at)
