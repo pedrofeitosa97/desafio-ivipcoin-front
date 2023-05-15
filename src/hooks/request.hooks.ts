@@ -25,7 +25,8 @@ export const useRequests = () => {
     }      
     const loginUserRequest = async (payload: iUserLogin) => {
         try {
-            const response = await api.post('/login', payload)
+            const validatedLogin = await loginSchema.validate(payload, { abortEarly: false });
+            const response = await api.post('/login', validatedLogin)
             const user: iUserToken = {
                 uid: response.data.uid,
                 name: response.data.displayName,
@@ -95,7 +96,7 @@ export const useRequests = () => {
                 theme: "dark",
             })
         } catch (error) {
-            console.log('Ocorreu um erro na requisição POST:', error)
+            console.log(error)
         }
     }
 
@@ -110,7 +111,7 @@ export const useRequests = () => {
                 theme: "dark",
             })
         } catch (error) {
-            console.log('Ocorreu um erro na requisição PATCH:', error)
+            console.log(error)
         }
     }
 

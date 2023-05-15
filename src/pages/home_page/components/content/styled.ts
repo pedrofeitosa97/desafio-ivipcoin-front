@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import Modal from '@mui/material/Modal';
+import TextField from '@mui/material/TextField/TextField';
 
 export const StyledModal = styled(Modal)`
 input {
@@ -10,6 +11,13 @@ input {
     margin-block: 8px;
     border-radius: 8px;
     border: 1px solid rgba(0,0,0,0.5);
+}
+`
+
+export const StyledTextField = styled(TextField)`
+width: 100%;
+@media (min-width: 1024px) {
+width: 50%;
 }
 `
 

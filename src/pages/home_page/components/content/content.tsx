@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Fab, ToggleButton, ToggleButtonGroup } from '@mui/material'
 import { StyledContentDiv } from './styled'
 import TextField from '@mui/material/TextField';
+import { StyledTextField } from './styled';
 import SearchIcon from '@mui/icons-material/Search';
 import Card from '../../../../components/card';
 import { useRequests } from '../../../../hooks/request.hooks';
@@ -131,7 +132,8 @@ const handleSearchInputChange = (event: React.ChangeEvent<HTMLInputElement>) => 
     setSearchValue(event.target.value);
     if(event.target.value === '') {
         if(alignment == 'getProfile') {
-            getMyTasks()
+            console.log(alignment)
+            getMyTaskList()
         } else if (alignment == 'getList') {
             getTaskList()
         }
@@ -151,8 +153,7 @@ const getCurrentTasks = () => {
             <Fab color="primary" onClick={handleOpen} aria-label="add">
                 +
             </Fab>
-            <div>
-            <TextField
+            <StyledTextField
                 label="Pesquisar"
                 value={searchValue}
                 onChange={handleSearchInputChange}
@@ -172,7 +173,6 @@ const getCurrentTasks = () => {
             <ToggleButton onClick={getMyTasks} value="getProfile" sx={{backgroundColor: 'rgba(255,250,240,0.08)', borderRadius: '6px', color: 'rgba(255,250,240,0.5)'}}>Minhas tarefas</ToggleButton>
             <ToggleButton onClick={getFullTaskList} value="getList" sx={{backgroundColor: 'rgba(255,250,240,0.08)', borderRadius: '6px', color: 'rgba(255,250,240,0.5)'}}>Lista de tarefas</ToggleButton>
             </ToggleButtonGroup>
-            </div> 
         </header>
         <main>
             {taskList ?
