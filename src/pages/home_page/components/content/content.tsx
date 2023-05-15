@@ -19,11 +19,16 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 500,
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
+    width: '80%',
     p: 4,
+    '@media (min-width: 600px)': {
+        width: '40%',
+        borderRadius: 0,
+        boxShadow: 'none',
+      },
 };
 
 const TASKS_PER_PAGE = 15;
