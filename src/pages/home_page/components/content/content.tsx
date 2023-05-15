@@ -9,6 +9,8 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { StyledModal } from './styled';
+import { Console } from 'console';
+import ReactPaginate from 'react-paginate';
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -22,6 +24,8 @@ const style = {
     p: 4,
 };
 
+const TASKS_PER_PAGE = 15;
+
 export default function Content() {
 const { getFullTaskListRequest, createUserTaskRequest, getCurrentUserRequest } = useRequests()
 const [alignment, setAlignment] = useState('getProfile')
@@ -34,13 +38,17 @@ const [description, setDescription] = useState('')
 const [refreshTask, setRefreshTaskList] = useState(false)
 const [taskListUpdate, setTaskListUpdate] = useState(false)
 const [searchValue, setSearchValue] = useState<string>('');
+const [currentPage, setCurrentPage] = useState(0);
+const [activePageIndex, setActivePageIndex] = useState(0);
+
+
+const pageCount = Math.ceil(taskList.length / TASKS_PER_PAGE);
 
 useEffect(() => {
     getMyTaskList()
 },[refreshTask, taskListUpdate])
 
 const getFullTaskList = async () => {
-    console.log(alignment)
     if(!alignment !== false || alignment !== 'getList') {
     const taskListData: any = await getFullTaskListRequest()
     const tasksWithDates = taskListData.map((task: any) => ({
@@ -53,6 +61,17 @@ const getFullTaskList = async () => {
     } else {
         setTaskList([])
     }
+}
+
+const getTaskList = async () => {
+    const taskListData: any = await getFullTaskListRequest()
+    const tasksWithDates = taskListData.map((task: any) => ({
+        ...task,
+        createdAt: new Date(task.created_at)
+      }));
+      
+    const sortedTasks = tasksWithDates.sort((a: any, b: any) => b.createdAt - a.createdAt);
+    setTaskList(sortedTasks)
 }
 
 const getMyTaskList = async () => {
@@ -99,7 +118,12 @@ const handleSubmit = async () => {
         setDescription('')
         await createUserTaskRequest(title, description)
         handleClose()
-        setRefreshTaskList(!refreshTask)
+        console.log(alignment)
+        if(alignment != 'getProfile' || alignment == null) {
+            getTaskList()
+        } else {
+            getMyTaskList()
+        }
     }
 };
 
@@ -109,14 +133,18 @@ const handleSearchInputChange = (event: React.ChangeEvent<HTMLInputElement>) => 
         if(alignment == 'getProfile') {
             getMyTasks()
         } else if (alignment == 'getList') {
-            getFullTaskList()
+            getTaskList()
         }
     }
     const filteredArray = taskList.filter((task: any) => task.description.toLowerCase().includes(searchValue.toLowerCase()))
     setTaskList(filteredArray)
 };
 
-
+const getCurrentTasks = () => {
+    const startIndex = currentPage * TASKS_PER_PAGE;
+    const endIndex = startIndex + TASKS_PER_PAGE;
+    return taskList.slice(startIndex, endIndex);
+}
   return (
     <StyledContentDiv>
         <header>
@@ -149,18 +177,29 @@ const handleSearchInputChange = (event: React.ChangeEvent<HTMLInputElement>) => 
         <main>
             {taskList ?
                 <ul className='task-list'>
-                    {taskList.map((task, index) => (
-                        <Card key={index} 
-                        task={task}
-                        setTaskListUpdate={setTaskListUpdate}
-                        getMyTasks={getMyTasks}
-                        taskList={taskList}
+                {getCurrentTasks().map((task, index) => (
+                    <Card key={index} 
+                    task={task}
+                    setTaskListUpdate={setTaskListUpdate}
+                    getMyTasks={getMyTasks}
+                    taskList={taskList}
                         />
                     ))}
                 </ul>
                 :
                 <></>
             }
+            {taskList.length > TASKS_PER_PAGE && (
+                <ReactPaginate
+                    previousLabel={'<'}
+                    nextLabel={'>'}
+                    breakLabel={'...'}
+                    pageCount={Math.ceil(taskList.length / TASKS_PER_PAGE)}
+                    onPageChange={(data) => setCurrentPage(data.selected)}
+                    containerClassName={'pagination'}
+                    activeClassName={'active'}
+                />
+            )}
         </main>
         <StyledModal
             open={open}

@@ -54,12 +54,27 @@ header {
 
 main {
     display: flex;
+    flex-direction: column;
     align-items: center;
     color: white;
     width: 100%;
     list-style: none;
     margin-top: 40px;
     border-radius: 8px;
+}
+
+.pagination {
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    font-weight: 700;
+}
+
+.active {
+    color: #7B53A8;
+    font-weight: 700;
 }
 
 .task-list {
