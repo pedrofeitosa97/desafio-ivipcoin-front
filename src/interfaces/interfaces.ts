@@ -38,3 +38,9 @@ export interface LoginFormValues {
     email: string;
     password: string;
   }
+
+export interface iUserNameRequest {
+    name: string;
+    photoURL: string;
+    uid: string;
+  }

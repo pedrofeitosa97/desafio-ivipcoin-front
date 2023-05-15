@@ -11,6 +11,7 @@ import Button from '@mui/material/Button';
 import { StyledModal } from './styled';
 import { Console } from 'console';
 import ReactPaginate from 'react-paginate';
+import { ICardProps } from '../../../../interfaces/interfaces';
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -50,7 +51,8 @@ useEffect(() => {
 
 const getFullTaskList = async () => {
     if(!alignment !== false || alignment !== 'getList') {
-    const taskListData: any = await getFullTaskListRequest()
+    const taskListData = await getFullTaskListRequest()
+    console.log(taskListData)
     const tasksWithDates = taskListData.map((task: any) => ({
         ...task,
         createdAt: new Date(task.created_at)
@@ -118,7 +120,6 @@ const handleSubmit = async () => {
         setDescription('')
         await createUserTaskRequest(title, description)
         handleClose()
-        console.log(alignment)
         if(alignment != 'getProfile' || alignment == null) {
             getTaskList()
         } else {

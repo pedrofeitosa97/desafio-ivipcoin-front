@@ -9,6 +9,7 @@ import Box from '@mui/material/Box/Box';
 import Typography from '@mui/material/Typography/Typography';
 import { StyledModal } from '../../pages/home_page/components/content/styled';
 import Button from '@mui/material/Button/Button';
+import { iUserNameRequest } from '../../interfaces/interfaces';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -33,11 +34,15 @@ export default function Card(props: ICardProps) {
   const handleCloseDelete = () => setOpenDelete(false);
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
-
+  
   useEffect(() => {
-    const userNameRequest: any = getCurrentUserRequest()
-    setCurrentUser(userNameRequest?.uid)
-  }, [])
+    const userNameRequest: iUserNameRequest | null = getCurrentUserRequest();
+    if (userNameRequest != null) {
+      const { name, photoURL, uid } = userNameRequest;
+      const user: iUserNameRequest = { name, photoURL, uid };
+      setCurrentUser(uid);
+    }
+  }, []);
 
   const handleSubmit = async () => {
     if (title && description !== '' ) {
