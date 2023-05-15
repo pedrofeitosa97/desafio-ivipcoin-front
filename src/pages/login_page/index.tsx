@@ -5,11 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { useRequests } from "../../hooks/request.hooks";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-interface LoginFormValues {
-  email: string;
-  password: string;
-}
+import { iUserLogin } from "../../interfaces/interfaces";
+import { LoginFormValues } from "../../interfaces/interfaces";
 
 const LoginForm: React.FC = () => {
   const navigate = useNavigate();
@@ -29,22 +26,11 @@ const LoginForm: React.FC = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log("Submitted values:", formValues);
     handleLogin(formValues)
   };
 
-  const handleLogin = async (data: any) =>{
-    try {
+  const handleLogin = async (data: iUserLogin) =>{
       await loginUserRequest(data)
-      navigate('/home')
-      toast.success('Login realizado com sucesso.',{
-        position: 'top-center'
-      })
-    } catch (error) {
-      toast.error('Email ou senha inválidos.',{
-        position: 'top-center'
-      })
-    }
   }
 
   return (

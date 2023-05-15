@@ -1,5 +1,15 @@
 import styled from 'styled-components'
+import Modal from '@mui/material/Modal';
 
+export const StyledModal = styled(Modal)`
+input {
+    display: block;
+    width: 100%;
+    height: 40px;
+    padding-inline: 8px;
+    margin-block: 8px;
+}
+`
 
 export const StyledContentDiv = styled.div`
 padding-top: 5%;
@@ -10,11 +20,34 @@ margin-inline: 10%;
 padding-inline: 2%;
 overflow-y: scroll;
 
+::-webkit-scrollbar {
+  width: 10px; 
+  height: 10px;
+}
+
+::-webkit-scrollbar-button {
+  background-color: #7B53A8;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #7B53A8;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #000000;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-corner {
+  background-color: #fff;
+}
 
 header {
     width: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
+    gap: 25px
 }
 
 main {
@@ -64,10 +97,29 @@ main ul li img {
     gap: 8px;
 }
 
+input {
+    display: block;
+    width: 100%;
+    height: 0px;
+    margin-block: 8px;
+}
+
 @media (min-width: 1024px) {
     padding-inline: 1%;
     padding-top: 2%;
     margin-inline: 20%;
+
+header {
+    flex-direction: row;
+    gap: 0px;
+}
+input {
+    display: block;
+    width: 10%;
+    height: 18px;
+    padding-inline: 8px;
+    margin-block: 0px;
+}
 
 .task-info {
     display: flex;
@@ -86,5 +138,6 @@ main ul li img {
     object-position: center 25%;
     height: 40px;
 }
+
 }
 `

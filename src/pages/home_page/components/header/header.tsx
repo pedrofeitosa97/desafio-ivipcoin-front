@@ -3,17 +3,13 @@ import { Button } from '@mui/material'
 import { StyledHeader } from './styled'
 import { useNavigate } from 'react-router-dom'
 import { useRequests } from '../../../../hooks/request.hooks'
-
-interface User {
-  uid: string;
-  name: string;
-  photoURL: string;
-}
+import { iUserToken } from '../../../../interfaces/interfaces'
+import { toast } from 'react-toastify'
 
 export default function Header() {
   const navigate = useNavigate()
-  const { getCurrentUserRequest } = useRequests()
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const { getCurrentUserRequest, deleteUserRequest } = useRequests()
+  const [currentUser, setCurrentUser] = useState<iUserToken | null>(null);
 
   useEffect(() => {
     const user = getCurrentUserRequest();
@@ -21,7 +17,11 @@ export default function Header() {
   }, []);
 
   const handleLogout = () => {
+    toast.info('Logout realizado com sucesso.', {
+      position: 'top-center'
+    })
     localStorage.removeItem('task-manager:token')
+    localStorage.removeItem('task-manager:user')
     navigate('/')
   }
   return (

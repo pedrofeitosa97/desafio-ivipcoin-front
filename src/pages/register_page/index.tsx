@@ -1,19 +1,14 @@
 import { useState } from "react";
 import { Form, StyledTypography, StyledTextField, StyledButton } from "../login_page/styled";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useRequests } from "../../hooks/request.hooks";
-
-interface RegisterFormValues {
-    name: string;
-    email: string;
-    password: string;
-    photoURL: string
-}
+import { iRegisterFormValues } from "../../interfaces/interfaces";
+import { toast } from 'react-toastify'
 
 export default function RegisterForm() {
     const navigate = useNavigate();
     const { registerUserRequest } = useRequests()
-    const [formValues, setFormValues] = useState<RegisterFormValues>({
+    const [formValues, setFormValues] = useState<iRegisterFormValues>({
         name: "",
         email: "",
         password: "",
@@ -29,14 +24,16 @@ export default function RegisterForm() {
     
       const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        console.log("Submitted values:", formValues);
+        navigate('/')
+        toast.success('Usuário registrado com sucesso!', {
+          position: 'top-center'
+        })
         handleRegister(formValues)
       };
 
-      const handleRegister = (data: any) => {
+      const handleRegister = (data: iRegisterFormValues) => {
         try {
           registerUserRequest(data)
-          console.log('registrou')
         } catch (error) {
           console.log(error)
         }
