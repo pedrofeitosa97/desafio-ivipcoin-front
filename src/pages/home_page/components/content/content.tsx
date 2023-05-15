@@ -1,7 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react'
 import { Fab, ToggleButton, ToggleButtonGroup } from '@mui/material'
 import { StyledContentDiv } from './styled'
-import TextField from '@mui/material/TextField';
 import { StyledTextField } from './styled';
 import SearchIcon from '@mui/icons-material/Search';
 import Card from '../../../../components/card';
@@ -10,9 +10,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { StyledModal } from './styled';
-import { Console } from 'console';
 import ReactPaginate from 'react-paginate';
-import { ICardProps } from '../../../../interfaces/interfaces';
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -42,14 +40,10 @@ const handleOpen = () => setOpen(true)
 const handleClose = () => setOpen(false)
 const [title, setTitle] = useState('')
 const [description, setDescription] = useState('')
-const [refreshTask, setRefreshTaskList] = useState(false)
+const [refreshTask] = useState(false)
 const [taskListUpdate, setTaskListUpdate] = useState(false)
 const [searchValue, setSearchValue] = useState<string>('');
 const [currentPage, setCurrentPage] = useState(0);
-const [activePageIndex, setActivePageIndex] = useState(0);
-
-
-const pageCount = Math.ceil(taskList.length / TASKS_PER_PAGE);
 
 useEffect(() => {
     getMyTaskList()
@@ -125,7 +119,7 @@ const handleSubmit = async () => {
         setDescription('')
         await createUserTaskRequest(title, description)
         handleClose()
-        if(alignment != 'getProfile' || alignment == null) {
+        if(alignment !== 'getProfile' || alignment == null) {
             getTaskList()
         } else {
             getMyTaskList()
@@ -136,10 +130,10 @@ const handleSubmit = async () => {
 const handleSearchInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.target.value);
     if(event.target.value === '') {
-        if(alignment == 'getProfile') {
+        if(alignment === 'getProfile') {
             console.log(alignment)
             getMyTaskList()
-        } else if (alignment == 'getList') {
+        } else if (alignment === 'getList') {
             getTaskList()
         }
     }

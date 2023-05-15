@@ -4,7 +4,6 @@ import RestoreFromTrashOutlinedIcon from '@mui/icons-material/RestoreFromTrashOu
 import { useRequests } from '../../hooks/request.hooks';
 import { ICardProps } from '../../interfaces/interfaces';
 import { CardLi } from './styled';
-import Modal from '@mui/material/Modal/Modal';
 import Box from '@mui/material/Box/Box';
 import Typography from '@mui/material/Typography/Typography';
 import { StyledModal } from '../../pages/home_page/components/content/styled';
@@ -40,14 +39,14 @@ export default function Card(props: ICardProps) {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const userNameRequest: iUserNameRequest | null = getCurrentUserRequest();
-    if (userNameRequest != null) {
-      const { name, photoURL, uid } = userNameRequest;
-      const user: iUserNameRequest = { name, photoURL, uid };
+    if (userNameRequest !== null) {
+      const { uid } = userNameRequest;
       setCurrentUser(uid);
     }
-  }, []);
+  });
 
   const handleSubmit = async () => {
     if (title && description !== '' ) {
@@ -85,7 +84,7 @@ export default function Card(props: ICardProps) {
               <p>{props.task.description}</p>
           </div>
             <div className='right-icons'>
-            {currentUser == props.task.owner.user_id ?
+            {currentUser === props.task.owner.user_id ?
                 <>
                   <ModeOutlinedIcon onClick={handleOpenEdit} style={{ cursor: 'pointer' }}/>
                   <RestoreFromTrashOutlinedIcon onClick={handleOpenDelete} style={{ cursor: 'pointer' }}/>
