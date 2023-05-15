@@ -35,7 +35,7 @@ const LoginForm: React.FC = () => {
 
   return (
     <>
-      <Form onSubmit={handleSubmit}>
+      <Form autoComplete="off" onSubmit={handleSubmit}>
         <StyledTypography variant="h5">Faça seu login</StyledTypography>
         <StyledTextField
           variant="filled"

@@ -8,6 +8,8 @@ input {
     height: 40px;
     padding-inline: 8px;
     margin-block: 8px;
+    border-radius: 8px;
+    border: 1px solid rgba(0,0,0,0.5);
 }
 `
 
@@ -97,13 +99,6 @@ main ul li img {
     gap: 8px;
 }
 
-input {
-    display: block;
-    width: 100%;
-    height: 0px;
-    margin-block: 8px;
-}
-
 @media (min-width: 1024px) {
     padding-inline: 1%;
     padding-top: 2%;
@@ -113,12 +108,9 @@ header {
     flex-direction: row;
     gap: 0px;
 }
+
 input {
-    display: block;
-    width: 10%;
     height: 18px;
-    padding-inline: 8px;
-    margin-block: 0px;
 }
 
 .task-info {

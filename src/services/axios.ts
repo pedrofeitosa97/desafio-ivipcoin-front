@@ -8,10 +8,4 @@ const api = axios.create({
       }
 })
 
-const token = localStorage.getItem('task-manager:token');
-
-if (token) {
-  api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-}
-
 export default api;

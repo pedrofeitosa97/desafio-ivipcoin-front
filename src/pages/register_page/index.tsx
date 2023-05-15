@@ -24,20 +24,12 @@ export default function RegisterForm() {
     
       const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        navigate('/')
-        toast.success('Usuário registrado com sucesso!', {
-          position: 'top-center'
-        })
-        handleRegister(formValues)
-      };
-
-      const handleRegister = (data: iRegisterFormValues) => {
         try {
-          registerUserRequest(data)
+          registerUserRequest(formValues)
         } catch (error) {
           console.log(error)
         }
-      }
+      };
 
   return (
     <>

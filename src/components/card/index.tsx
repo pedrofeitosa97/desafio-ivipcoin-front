@@ -97,11 +97,11 @@ export default function Card(props: ICardProps) {
         </Typography>
         <label htmlFor="title">
                 Título:
-              <input className="input-text" type="text" name="title" id="title" value={title} onChange={(e) => setTitle(e.target.value)} />
+              <input placeholder='Digite o título da tarefa.' className="input-text" type="text" name="title" id="title" value={title} onChange={(e) => setTitle(e.target.value)} />
         </label>
         <label htmlFor="description">
                 Descrição:
-            <input className="input-text" type="text" name="description" id="description" value={description} onChange={(e) => setDescription(e.target.value)} />
+            <input placeholder='Digite a descrição da tarefa.' className="input-text" type="text" name="description" id="description" value={description} onChange={(e) => setDescription(e.target.value)} />
         </label>     
         <Button variant="contained" onClick={handleSubmit} sx={{ mt: 2 }}>
                 Criar tarefa

@@ -18,7 +18,8 @@ export default function Header() {
 
   const handleLogout = () => {
     toast.info('Logout realizado com sucesso.', {
-      position: 'top-center'
+      position: 'top-center',
+      theme: "dark"
     })
     localStorage.removeItem('task-manager:token')
     localStorage.removeItem('task-manager:user')

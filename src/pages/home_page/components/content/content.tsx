@@ -36,26 +36,60 @@ const [taskListUpdate, setTaskListUpdate] = useState(false)
 const [searchValue, setSearchValue] = useState<string>('');
 
 useEffect(() => {
-    getMyTasks()
+    getMyTaskList()
 },[refreshTask, taskListUpdate])
 
 const getFullTaskList = async () => {
+    console.log(alignment)
+    if(!alignment !== false || alignment !== 'getList') {
     const taskListData: any = await getFullTaskListRequest()
-    setTaskList(taskListData)
+    const tasksWithDates = taskListData.map((task: any) => ({
+        ...task,
+        createdAt: new Date(task.created_at)
+      }));
+      
+    const sortedTasks = tasksWithDates.sort((a: any, b: any) => b.createdAt - a.createdAt);
+    setTaskList(sortedTasks)
+    } else {
+        setTaskList([])
+    }
 }
 
-const getMyTasks = async () => {
+const getMyTaskList = async () => {
     const taskListData: any = await getFullTaskListRequest()
     const currentUser = getCurrentUserRequest()
     const currentUserTasks = taskListData.filter((task: any) =>  task.owner.user_id === currentUser?.uid);
-    setTaskList(currentUserTasks)
+    const tasksWithDates = currentUserTasks.map((task: any) => ({
+        ...task,
+            createdAt: new Date(task.created_at)
+        }));
+          
+    const sortedTasks = tasksWithDates.sort((a: any, b: any) => b.createdAt - a.createdAt);
+    setTaskList(sortedTasks)
+}
+
+const getMyTasks = async () => {
+    if(!alignment !== false || alignment !== 'getProfile') {
+        const taskListData: any = await getFullTaskListRequest()
+        const currentUser = getCurrentUserRequest()
+        const currentUserTasks = taskListData.filter((task: any) =>  task.owner.user_id === currentUser?.uid);
+        const tasksWithDates = currentUserTasks.map((task: any) => ({
+            ...task,
+            createdAt: new Date(task.created_at)
+          }));
+          
+        const sortedTasks = tasksWithDates.sort((a: any, b: any) => b.createdAt - a.createdAt);
+        setTaskList(sortedTasks)
+    } else {
+        setTaskList([])
+    }
 }
 
 const handleChange = (
         event: React.MouseEvent<HTMLElement>,
         newAlignment: string,
       ) => {
-        setAlignment(newAlignment);
+            setAlignment(newAlignment);
 };
 
 
@@ -74,7 +108,7 @@ const handleSearchInputChange = (event: React.ChangeEvent<HTMLInputElement>) => 
     if(event.target.value === '') {
         if(alignment == 'getProfile') {
             getMyTasks()
-        } else {
+        } else if (alignment == 'getList') {
             getFullTaskList()
         }
     }
@@ -100,15 +134,15 @@ const handleSearchInputChange = (event: React.ChangeEvent<HTMLInputElement>) => 
                 }}
             />
             <ToggleButtonGroup
-                color="secondary"
-                className="button-check"
-                value={alignment}
-                exclusive
-                onChange={handleChange}
-                aria-label="Platform"
-                >
-                <ToggleButton onClick={getMyTasks} value="getProfile" sx={{backgroundColor: 'rgba(255,250,240,0.08)', borderRadius: '6px', color: 'rgba(255,250,240,0.5)'}}>Minhas tarefas</ToggleButton>
-                <ToggleButton onClick={getFullTaskList} value="getList" sx={{backgroundColor: 'rgba(255,250,240,0.08)', borderRadius: '6px', color: 'rgba(255,250,240,0.5)'}}>Lista de tarefas</ToggleButton>
+            color="secondary"
+            className="button-check"
+            value={alignment}
+            exclusive
+            onChange={handleChange}
+            aria-label="Platform"
+            >
+            <ToggleButton onClick={getMyTasks} value="getProfile" sx={{backgroundColor: 'rgba(255,250,240,0.08)', borderRadius: '6px', color: 'rgba(255,250,240,0.5)'}}>Minhas tarefas</ToggleButton>
+            <ToggleButton onClick={getFullTaskList} value="getList" sx={{backgroundColor: 'rgba(255,250,240,0.08)', borderRadius: '6px', color: 'rgba(255,250,240,0.5)'}}>Lista de tarefas</ToggleButton>
             </ToggleButtonGroup>
             </div> 
         </header>
@@ -140,11 +174,11 @@ const handleSearchInputChange = (event: React.ChangeEvent<HTMLInputElement>) => 
                 </Typography>
                 <label htmlFor="title">
                 Título:
-                <input className="input-text" type="text" name="title" id="title" value={title} onChange={(e) => setTitle(e.target.value)} />
+                <input placeholder='Digite o título da tarefa.' className="input-text" type="text" name="title" id="title" value={title} onChange={(e) => setTitle(e.target.value)} />
                 </label>
                 <label htmlFor="description">
                 Descrição:
-                <input className="input-text" type="text" name="description" id="description" value={description} onChange={(e) => setDescription(e.target.value)} />
+                <input placeholder='Digite a descrição da tarefa.' className="input-text" type="text" name="description" id="description" value={description} onChange={(e) => setDescription(e.target.value)} />
                 </label>
                 <Button variant="contained" onClick={handleSubmit} sx={{ mt: 2 }}>
                 Criar tarefa
