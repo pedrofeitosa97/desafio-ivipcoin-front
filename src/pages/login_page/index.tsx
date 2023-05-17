@@ -1,20 +1,19 @@
-import { useState } from "react";
-import { TextField, Button, Typography } from "@mui/material";
-import { Form, StyledTypography, StyledTextField, StyledBackground } from "./styled";
-import { useNavigate } from "react-router-dom";
-import { useRequests } from "../../hooks/request.hooks";
-import { ToastContainer, toast } from 'react-toastify';
+import { useState } from 'react';
+import { Button } from '@mui/material';
+import { Form, StyledTypography, StyledTextField } from './styled';
+import { useNavigate } from 'react-router-dom';
+import { useRequests } from '../../hooks/request.hooks';
 import 'react-toastify/dist/ReactToastify.css';
-import { iUserLogin } from "../../interfaces/interfaces";
-import { LoginFormValues } from "../../interfaces/interfaces";
+import { iUserLogin } from '../../interfaces/interfaces';
+import { LoginFormValues } from '../../interfaces/interfaces';
 
 const LoginForm: React.FC = () => {
   const navigate = useNavigate();
-  const { loginUserRequest } = useRequests()
+  const { loginUserRequest } = useRequests();
 
   const [formValues, setFormValues] = useState<LoginFormValues>({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,12 +25,12 @@ const LoginForm: React.FC = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    handleLogin(formValues)
+    handleLogin(formValues);
   };
 
-  const handleLogin = async (data: iUserLogin) =>{
-      await loginUserRequest(data)
-  }
+  const handleLogin = async (data: iUserLogin) => {
+    await loginUserRequest(data);
+  };
 
   return (
     <>

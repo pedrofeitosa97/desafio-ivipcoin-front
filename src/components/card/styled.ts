@@ -1,11 +1,9 @@
-import styled from 'styled-components'
-
+import styled from 'styled-components';
 
 export const CardLi = styled.li`
-width: 100%;
+  width: 100%;
 
-.right-icons {
+  .right-icons {
     width: 70px;
-}
-
-`
+  }
+`;
